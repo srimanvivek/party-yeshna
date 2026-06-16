@@ -412,12 +412,44 @@
             cursor: pointer;
             transition: all 0.2s ease, font-size 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .yes-btn {
-            background: linear-gradient(45deg, #10b981, #059669);
-            color: white;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-            z-index: 5;
-        }
+      .yes-btn {
+    background: linear-gradient(45deg, #10b981, #059669);
+    color: white;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    z-index: 5;
+
+    position: relative;
+    overflow: hidden;
+    min-width: 220px;
+}
+
+.yes-btn::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.4),
+        transparent
+    );
+    animation:shine 2s infinite;
+}
+
+#treat-level{
+    display:block;
+    font-size:.75rem;
+    margin-top:4px;
+}
+
+@keyframes shine{
+    100%{
+        left:120%;
+    }
+}
         .no-btn {
             background: #ef4444;
             color: white;
@@ -633,7 +665,10 @@
             <div id="game-question-area">
                 <h3 id="game-heading">Will you officially sponsor your favourite younger brother's treat?</h3>
                 <div class="game-actions" id="button-container">
-                    <button class="game-btn yes-btn" id="btn-yes" onclick="selectYesAnswer()">🥳 Yes Of Course</button>
+                    <button class="game-btn yes-btn" id="btn-yes" onclick="selectYesAnswer()">
+    🎁 Sponsor The Treat
+    <span id="treat-level">Level 1</span>
+</button>
                     <button class="game-btn no-btn" id="btn-no" onclick="handleNoInteraction(event)" onmouseover="handleNoInteraction(event)">🙄 No</button>
                 </div>
             </div>
@@ -789,11 +824,27 @@
             6: "😂 Nice Try",
             8: "🏃 Catch Me First"
         };
-
+const treatLevels = [
+    "Level 1",
+    "Level 2",
+    "VIP Sponsor",
+    "Legend Sponsor",
+    "Best Didi Ever",
+    "Treat Queen 👑"
+];
         function handleNoInteraction(e) {
             e.preventDefault(); // Stifles mobile jumping metrics
             noClicks++;
+if(noClicks < treatLevels.length){
+    document.getElementById("treat-level").innerText =
+    treatLevels[noClicks];
+}
 
+if(noClicks >= 5){
+    yesBtn.innerHTML =
+    `👑 BEST OPTION AVAILABLE
+    <span id="treat-level">99% Recommended</span>`;
+}
             // Handle text conversion structural boundaries
             if (noPhrases[noClicks]) {
                 noBtn.innerText = noPhrases[noClicks];
@@ -821,22 +872,38 @@
             noBtn.style.top = `calc(50% - ${btnHeight/2}px + ${randomY}px)`;
         }
 
-        function selectYesAnswer() {
-            // Re-render display states
-            document.getElementById('game-question-area').style.display = 'none';
-            document.getElementById('success-card').style.display = 'block';
-            
-            // Re-append dynamic success metric transformations inside container structure
-            const newYesBtn = document.createElement('button');
-            newYesBtn.className = 'game-btn yes-btn';
-            newYesBtn.style.transform = 'none';
-            newYesBtn.innerText = '💖 Best Sister Ever';
-            document.getElementById('game-main-box').appendChild(newYesBtn);
+       function selectYesAnswer(){
 
-            // Execute programmatic celebration bursts
-            triggerConfettiExplosion();
-        }
+    triggerConfettiExplosion();
 
+    document.getElementById('game-question-area').innerHTML = `
+        <div style="padding:20px">
+            <h2 style="font-size:2rem">🎉 TREAT APPROVED 🎉</h2>
+
+            <p style="margin:15px 0">
+                Congratulations Didi!
+            </p>
+
+            <div style="
+                background:rgba(16,185,129,.1);
+                padding:15px;
+                border-radius:15px;
+                margin-top:15px;
+                line-height:1.8;
+            ">
+                ✅ Best Sister Award<br>
+                ✅ Premium Respect Pass<br>
+                ✅ Unlimited Younger Brother Happiness<br>
+                ✅ VIP Family Status<br>
+                ✅ One Pending Treat Bill 😎
+            </div>
+
+            <h3 style="margin-top:20px">
+                Wise Decision 👑
+            </h3>
+        </div>
+    `;
+}
         function triggerCertificateCelebration() {
             triggerConfettiExplosion();
             const cert = document.querySelector('.certificate-badge');
