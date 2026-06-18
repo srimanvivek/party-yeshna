@@ -1,993 +1,784 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dedicated to My Favourite Troublemaker</title>
-    <style>
-        /* --- DESIGN SYSTEM & CSS VARIABLES --- */
-        :root {
-            --bg-gradient: linear-gradient(135deg, #ffe5ec 0%, #f0e6ff 40%, #e8f0fe 70%, #e3fafc 100%);
-            --glass-bg: rgba(255, 255, 255, 0.45);
-            --glass-border: rgba(255, 255, 255, 0.6);
-            --glass-shadow: 0 8px 32px 0 rgba(142, 107, 185, 0.15);
-            --text-main: #4a3e56;
-            --text-muted: #6c5a80;
-            --accent-pink: #ff758f;
-            --accent-purple: #9c88ff;
-            --accent-blue: #74b9ff;
-            --glow-strong: 0 0 20px rgba(255, 117, 143, 0.4);
-            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jhumri, We Need To Talk 😭</title>
 
-        /* --- GLOBAL STYLES --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-        html {
-            scroll-behavior: smooth;
-            font-family: var(--font-family);
-            color: var(--text-main);
-            background: var(--bg-gradient);
-            background-attachment: fixed;
-            overflow-x: hidden;
-        }
-
-        body {
-            min-height: 100vh;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* --- PERSISTENT FLOATING ELEMENTS BACKGROUND --- */
-        #ambient-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .floating-element {
-            position: absolute;
-            font-size: 1.5rem;
-            opacity: 0.6;
-            animation: floatUp 12s linear infinite;
-            will-change: transform, opacity;
-        }
-
-        @keyframes floatUp {
-            0% {
-                transform: translateY(105vh) translateX(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% { opacity: 0.7; }
-            90% { opacity: 0.7; }
-            100% {
-                transform: translateY(-10vh) translateX(50px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        /* --- PREMIUM GLASSMORPHISM MIXIN STYLES --- */
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            box-shadow: var(--glass-shadow);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
-        }
-
-        /* --- LAYOUT & UTILITIES --- */
-        section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 20px;
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            margin-bottom: 30px;
-            background: linear-gradient(45deg, var(--accent-pink), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-        }
-
-        /* --- MUSIC UTILITY --- */
-        .music-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: none;
-            background: var(--glass-bg);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            box-shadow: var(--glass-shadow);
-            cursor: pointer;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s ease;
-            border: 1px solid var(--glass-border);
-        }
-        .music-toggle:active { transform: scale(0.9); }
-
-        /* --- SECTION 1: HERO --- */
-        #hero {
-            padding-top: 80px;
-        }
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 15px;
-            animation: pulseGlow 3s ease-in-out infinite alternate;
-        }
-        .hero-sub {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            margin-bottom: 40px;
-            padding: 0 10px;
-            font-weight: 500;
-        }
-        .cta-btn {
-            padding: 16px 36px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: white;
-            background: linear-gradient(45deg, var(--accent-pink), var(--accent-purple));
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 117, 143, 0.4);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .cta-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 117, 143, 0.6);
-        }
-        .cta-btn:active { transform: translateY(1px); }
-
-        /* --- SECTION 2: TALK ABOUT --- */
-        .cards-grid {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .talk-card {
-            padding: 24px;
-            text-align: left;
-        }
-        .talk-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            border-color: var(--accent-pink);
-            box-shadow: var(--glow-strong);
-        }
-        .talk-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .talk-card p {
-            color: var(--text-muted);
-            font-size: 1rem;
-        }
-
-        /* --- SECTION 3: OFFICIAL FACTS --- */
-        .facts-container {
-            width: 100%;
-            padding: 25px;
-        }
-        .progress-wrapper {
-            margin-bottom: 25px;
-            text-align: left;
-        }
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
-        .progress-bar-bg {
-            width: 100%;
-            height: 12px;
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        .progress-bar-fill {
-            height: 100%;
-            border-radius: 10px;
-            width: 0;
-            transition: width 1.5s cubic-bezier(0.1, 1, 0.1, 1);
-        }
-        .notice-board {
-            margin-top: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .notice-tag {
-            padding: 10px 16px;
-            background: rgba(255, 255, 255, 0.25);
-            border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            border-left: 4px solid var(--accent-purple);
-            text-align: left;
-        }
-
-        /* --- SECTION 4: POLAROID GALLERY --- */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            width: 100%;
-        }
-        .gallery-grid :nth-child(odd) { transform: rotate(-3deg); }
-        .gallery-grid :nth-child(even) { transform: rotate(3deg); }
-        
-        .polaroid {
-            background: white;
-            padding: 10px 10px 24px 10px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-            border-radius: 4px;
-            cursor: pointer;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-        .polaroid:hover {
-            transform: scale(1.05) rotate(0deg) !important;
-            box-shadow: 0 12px 30px rgba(142, 107, 185, 0.25);
-            z-index: 10;
-        }
-        .polaroid-img-frame {
-            width: 100%;
-            aspect-ratio: 1;
-            background: #eee;
-            overflow: hidden;
-            border-radius: 2px;
-            margin-bottom: 12px;
-        }
-        .polaroid-img-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .polaroid-caption {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #555;
-            font-family: sans-serif;
-        }
-
-        /* LIGHTBOX SYSTEM */
-        #lightbox {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 2000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        #lightbox.active { display: flex; opacity: 1; }
-        #lightbox img { max-width: 90%; max-height: 80%; border-radius: 8px; box-shadow: 0 5px 25px rgba(0,0,0,0.5); }
-
-        /* --- SECTION 5: VIDEO MEMORIES --- */
-        .video-wrapper {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-        .video-card {
-            padding: 14px;
-            width: 100%;
-        }
-        .video-card video {
-            width: 100%;
-            border-radius: 14px;
-            display: block;
-            background: #000;
-        }
-
-        /* --- SECTION 6: APPRECIATION NOTES --- */
-        .sticky-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            width: 100%;
-        }
-        .sticky-note {
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.4);
-            border: 1px solid var(--glass-border);
-            border-radius: 18px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            box-shadow: var(--glass-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100px;
-        }
-
-        /* --- SECTION 7: CRITICAL ISSUE --- */
-        .matter-card {
-            width: 100%;
-            padding: 30px 20px;
-        }
-        .text-seq {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            min-height: 35px;
-            transition: all 0.5s ease;
-        }
-        .countdown-display {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--accent-pink);
-            margin: 20px 0;
-            font-variant-numeric: tabular-nums;
-            text-shadow: 0 0 10px rgba(255, 117, 143, 0.2);
-        }
-        #treat-center {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-            margin-top: 20px;
-        }
-        .qr-frame {
-            width: 180px;
-            height: 180px;
-            background: white;
-            margin: 20px auto;
-            padding: 10px;
-            border-radius: 16px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-        }
-        .qr-frame img { width: 100%; height: 100%; object-fit: contain; }
-
-        /* --- SECTION 8: DECISION GAME --- */
-        .game-card {
-            width: 100%;
-            padding: 35px 20px;
-            min-height: 450px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-        .game-card h3 { font-size: 1.35rem; margin-bottom: 30px; padding: 0 10px; }
-        .game-actions {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            position: relative;
-            min-height: 60px;
-        }
-        .game-btn {
-            padding: 14px 28px;
-            font-size: 1rem;
-            font-weight: 700;
-            border-radius: 30px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s ease, font-size 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-      .yes-btn {
-    background: linear-gradient(45deg, #10b981, #059669);
-    color: white;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-    z-index: 5;
-
-    position: relative;
-    overflow: hidden;
-    min-width: 220px;
+<style>
+ .video-card video{
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 20px;
+    display: block;
 }
 
-.yes-btn::before{
-    content:'';
-    position:absolute;
-    top:0;
-    left:-100%;
+.video-card video{
     width:100%;
-    height:100%;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,.4),
-        transparent
-    );
-    animation:shine 2s infinite;
-}
-
-#treat-level{
+    border-radius:20px;
     display:block;
-    font-size:.75rem;
-    margin-top:4px;
 }
 
-@keyframes shine{
-    100%{
-        left:120%;
-    }
+.video-caption{
+    text-align:center;
+    padding:15px;
+    font-weight:600;
+    font-size:1.1rem;
 }
-      .no-btn{
-    background:#ef4444;
-    color:white;
-    box-shadow:0 4px 12px rgba(239,68,68,.2);
-
-    position:absolute;
-
-    transition:
-        left .35s ease,
-        top .35s ease,
-        transform .2s ease;
-
-    z-index:999;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
-        #success-card {
-            display: none;
-            width: 100%;
-            padding: 25px;
-            margin-top: 20px;
-            border-color: #10b981;
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-        @keyframes popIn {
-            0% { transform: scale(0.9); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
 
-        /* --- SECTION 9: FINAL MESSAGE --- */
-        .final-card {
-            width: 100%;
-            padding: 35px 25px;
-        }
-        .final-card p { font-size: 1.1rem; margin-bottom: 12px; font-weight: 500; }
-        .certificate-badge {
-            margin-top: 35px;
-            padding: 25px;
-            background: linear-gradient(135deg, #fff3bf 0%, #ffec99 100%);
-            border: 3px dashed #fcc419;
-            border-radius: 20px;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(252, 196, 25, 0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .certificate-badge:hover {
-            transform: scale(1.04);
-            box-shadow: 0 12px 30px rgba(252, 196, 25, 0.35);
-        }
-        .certificate-badge h4 { font-size: 1.4rem; color: #e67e22; margin-bottom: 5px; }
-        .certificate-badge p { font-size: 0.9rem; color: #d35400; margin: 0; font-weight: bold; }
+body{
+overflow-x:hidden;
+background:
+linear-gradient(135deg,#fff4f6,#fdf2f8,#f3e8ff);
+min-height:100vh;
+color:#4b2c3f;
+}
 
-        /* --- CANVAS INTERACTION STYLES --- */
-        #confetti-canvas {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none;
-            z-index: 3000;
-        }
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at 20% 20%,rgba(255,192,203,.4),transparent 30%),
+radial-gradient(circle at 80% 30%,rgba(221,160,221,.35),transparent 30%),
+radial-gradient(circle at 50% 80%,rgba(255,228,196,.35),transparent 35%);
+z-index:-2;
+}
 
-        /* --- GLOBAL ANIMATIONS --- */
-        @keyframes pulseGlow {
-            0% { text-shadow: 0 0 10px rgba(255, 117, 143, 0.1); }
-            100% { text-shadow: 0 0 25px rgba(255, 117, 143, 0.45); }
-        }
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        .scroll-reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+.floating{
+position:fixed;
+font-size:28px;
+animation:float 12s linear infinite;
+pointer-events:none;
+opacity:.8;
+z-index:0;
+}
+
+@keyframes float{
+0%{
+transform:translateY(110vh) rotate(0deg);
+}
+100%{
+transform:translateY(-120px) rotate(360deg);
+}
+}
+
+.container{
+width:min(1200px,92%);
+margin:auto;
+position:relative;
+z-index:2;
+}
+
+.glass{
+background:rgba(255,255,255,.25);
+backdrop-filter:blur(15px);
+-webkit-backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,.35);
+box-shadow:0 8px 32px rgba(0,0,0,.08);
+border-radius:30px;
+}
+
+.hero{
+padding:80px 30px;
+text-align:center;
+margin-top:30px;
+}
+
+.hero h1{
+font-size:clamp(2.5rem,6vw,5rem);
+font-weight:800;
+background:linear-gradient(90deg,#ff5f9e,#b76cff,#ff9f68);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:15px;
+}
+
+.subtitle{
+font-size:1.1rem;
+opacity:.85;
+margin-bottom:40px;
+}
+
+.profile-wrap{
+position:relative;
+display:inline-block;
+}
+
+.profile{
+width:260px;
+height:260px;
+border-radius:50%;
+object-fit:cover;
+border:8px solid rgba(255,255,255,.6);
+box-shadow:0 20px 50px rgba(0,0,0,.15);
+background:#fff;
+}
+
+.arrow{
+position:absolute;
+right:-120px;
+top:50%;
+font-size:3rem;
+animation:bounce 1s infinite;
+}
+
+@keyframes bounce{
+50%{
+transform:translateX(15px);
+}
+}
+
+.hero-text{
+margin-top:25px;
+font-size:1.3rem;
+font-weight:600;
+}
+
+.section{
+padding:60px 30px;
+margin-top:35px;
+}
+
+.section-title{
+font-size:2rem;
+font-weight:700;
+margin-bottom:25px;
+text-align:center;
+}
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:25px;
+}
+
+.frame{
+padding:15px;
+border-radius:25px;
+background:rgba(255,255,255,.25);
+backdrop-filter:blur(15px);
+transition:.4s;
+}
+
+.frame:hover{
+transform:translateY(-8px);
+}
+
+.frame img{
+width:100%;
+height:320px;
+object-fit:cover;
+border-radius:20px;
+}
+
+.caption{
+text-align:center;
+padding:15px;
+font-weight:600;
+}
+
+.stat{
+margin-bottom:22px;
+}
+
+.label{
+display:flex;
+justify-content:space-between;
+margin-bottom:8px;
+font-weight:600;
+}
+
+.bar{
+height:18px;
+border-radius:999px;
+overflow:hidden;
+background:rgba(255,255,255,.45);
+}
+
+.fill{
+height:100%;
+border-radius:999px;
+background:linear-gradient(90deg,#ff7eb3,#ff758c,#b76cff);
+animation:grow 2s ease forwards;
+transform-origin:left;
+}
+
+@keyframes grow{
+from{
+transform:scaleX(0);
+}
+to{
+transform:scaleX(1);
+}
+}
+
+.story{
+font-size:1.1rem;
+line-height:1.9;
+text-align:center;
+}
+
+.question{
+text-align:center;
+padding:70px 30px;
+position:relative;
+overflow:hidden;
+}
+
+.question h2{
+font-size:clamp(2rem,5vw,3.2rem);
+margin-bottom:25px;
+}
+
+.buttons{
+height:180px;
+position:relative;
+margin-top:20px;
+}
+
+.yes{
+background:linear-gradient(135deg,#ff5f9e,#ff8b66);
+color:white;
+border:none;
+padding:18px 35px;
+font-size:1.15rem;
+border-radius:999px;
+cursor:pointer;
+font-weight:700;
+transition:.3s;
+box-shadow:0 10px 25px rgba(255,95,158,.35);
+}
+
+.no{
+position:absolute;
+margin-left:20px;
+background:white;
+border:none;
+padding:18px 35px;
+font-size:1.15rem;
+border-radius:999px;
+cursor:pointer;
+font-weight:700;
+transition:.25s;
+}
+
+.roast{
+margin-top:20px;
+font-size:1.2rem;
+font-weight:600;
+min-height:40px;
+}
+
+.meter{
+margin-top:35px;
+}
+
+.meter-title{
+font-weight:700;
+margin-bottom:10px;
+}
+
+.meter-bar{
+height:24px;
+background:rgba(255,255,255,.5);
+border-radius:999px;
+overflow:hidden;
+}
+
+.meter-fill{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#ff5f9e,#ffb347);
+transition:.4s;
+}
+
+.percent{
+margin-top:8px;
+font-weight:700;
+}
+
+.success{
+display:none;
+text-align:center;
+padding:90px 20px;
+animation:pop .8s ease;
+}
+
+@keyframes pop{
+from{
+transform:scale(.8);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.success h1{
+font-size:clamp(2.5rem,7vw,5rem);
+margin-bottom:20px;
+}
+
+.success p{
+font-size:1.2rem;
+margin-bottom:15px;
+}
+
+.achievement{
+margin-top:25px;
+display:inline-block;
+padding:20px 30px;
+border-radius:20px;
+background:rgba(255,255,255,.3);
+}
+
+.confetti{
+position:fixed;
+width:10px;
+height:10px;
+top:-20px;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+to{
+transform:translateY(110vh) rotate(900deg);
+}
+}
+
+@media(max-width:768px){
+
+.arrow{
+position:relative;
+right:auto;
+top:auto;
+display:block;
+margin-top:15px;
+}
+
+.profile{
+width:220px;
+height:220px;
+}
+
+.no{
+position:relative;
+display:block;
+margin:15px auto;
+}
+}
+  .music-btn{
+position:fixed;
+bottom:20px;
+right:20px;
+width:55px;
+height:55px;
+border-radius:50%;
+border:none;
+cursor:pointer;
+font-size:22px;
+background:rgba(255,255,255,0.6);
+backdrop-filter:blur(10px);
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
+z-index:9999;
+transition:0.3s;
+}
+
+.music-btn:hover{
+transform:scale(1.1);
+}
+</style>
 </head>
 <body>
+<audio id="bgMusic" loop preload="auto">
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+<button id="musicBtn" class="music-btn">🔇</button>
+<div class="floating" style="left:5%;animation-delay:0s;">💖</div>
+<div class="floating" style="left:15%;animation-delay:2s;">✨</div>
+<div class="floating" style="left:30%;animation-delay:5s;">🍕</div>
+<div class="floating" style="left:50%;animation-delay:1s;">💗</div>
+<div class="floating" style="left:70%;animation-delay:4s;">🧁</div>
+<div class="floating" style="left:85%;animation-delay:3s;">✨</div>
+<div class="floating" style="left:92%;animation-delay:6s;">🍟</div>
 
-    <audio id="bg-music" src="music.mp3" loop></audio>
-    <button class="music-toggle" id="music-btn" onclick="toggleMusic()" aria-label="Toggle Music">🎵</button>
+<div class="container">
 
-    <canvas id="confetti-canvas"></canvas>
+<section class="hero glass">
+<h1>Jhumri, We Need To Talk 😭</h1>
 
-    <div id="ambient-container"></div>
+<p class="subtitle">
+I was peacefully minding my own business when I realized something very disturbing...
+</p>
 
-    <section id="hero">
-        <h1 class="hero-title">Hey Didi 👋</h1>
-        <p class="hero-sub">I made something for you because apparently being talented, beautiful and annoying at the same time deserves recognition.</p>
-        <button class="cta-btn" onclick="scrollToNext('talk')">See Why ↓</button>
-    </section>
+<div class="profile-wrap">
+<img src="ChatGPT Image Jun 15, 2026, 10_09_35 AM.png" class="profile" alt="Jhumri">
+<div class="arrow">✨👆✨</div>
+</div>
 
-    <section id="talk" class="scroll-reveal">
-        <h2 class="section-title">Things We Need To Talk About</h2>
-        <div class="cards-grid">
-            <div class="glass-card talk-card">
-                <h3>🌟 Too Talented</h3>
-                <p>"At this point it's getting suspicious."</p>
-            </div>
-            <div class="glass-card talk-card">
-                <h3>✨ Too Smart</h3>
-                <p>"Kindly stop making the rest of us look bad."</p>
-            </div>
-            <div class="glass-card talk-card">
-                <h3>🎨 Good At Almost Everything</h3>
-                <p>"Leave some achievements for normal people."</p>
-            </div>
-            <div class="glass-card talk-card">
-                <h3>📸 Looks Good In Every Picture</h3>
-                <p>"Scientists remain confused."</p>
-            </div>
-            <div class="glass-card talk-card">
-                <h3>💸 Still Hasn't Sponsored Enough Treats</h3>
-                <p>"Ongoing investigation."</p>
+<div class="hero-text">
+How can someone look this good and still not give a treat?
+</div>
+</section>
+
+<section class="section glass">
+<h2 class="section-title">📸 Evidence Gallery</h2>
+
+<div class="gallery">
+
+<div class="frame">
+<img src="ChatGPT Image Jun 15, 2026, 10_10_43 AM.png" alt="">
+<div class="caption">Looking expensive.</div>
+</div>
+
+<div class="frame">
+<img src="ChatGPT Image Jun 15, 2026, 10_38_42 AM.png" alt="">
+<div class="caption">Acting innocent.</div>
+</div>
+
+<div class="frame">
+<img src="ChatGPT Image Jun 15, 2026, 10_40_36 AM.png" alt="">
+<div class="caption">Still hasn't given a treat.</div>
+</div>
+  
+  <div class="frame">
+<img src="Screenshot 2023-06-25 235822.jpg" alt="">
+<div class="caption">Collecting compliments like Pokémon cards.</div>
+</div>
+
+  <div class="frame">
+<img src="Gemini_Generated_Image_g9ovxng9ovxng9ov.png" alt="">
+<div class="caption">Professional treat avoidance specialist.</div>
+</div>
+
+
+  
+</div>
+
+  
+
+</section>
+<section class="section glass">
+    <h2 class="section-title">🎬 Secret Video Evidence</h2>
+
+    <div class="video-gallery">
+
+        <div class="video-card">
+            <video controls poster="thumbnail1.jpg">
+                <source src="WhatsApp Video 2026-06-15 at 22.23.43.mp4" type="video/mp4">
+            </video>
+            <div class="video-caption">
+               Jhumri successfully changing the topic whenever treats are mentioned.
             </div>
         </div>
-    </section>
 
-    <section id="facts" class="scroll-reveal">
-        <h2 class="section-title">Official Facts About You</h2>
-        <div class="glass-card facts-container">
-            <div class="progress-wrapper">
-                <div class="progress-label"><span>Talent</span><span>100%</span></div>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" style="background: var(--accent-pink);" data-width="100%"></div></div>
-            </div>
-            <div class="progress-wrapper">
-                <div class="progress-label"><span>Beauty</span><span>100%</span></div>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" style="background: var(--accent-purple);" data-width="100%"></div></div>
-            </div>
-            <div class="progress-wrapper">
-                <div class="progress-label"><span>Patience</span><span>95%</span></div>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" style="background: var(--accent-blue);" data-width="95%"></div></div>
-            </div>
-            <div class="progress-wrapper">
-                <div class="progress-label"><span>Treat Giving Skills</span><span id="loading-txt">Loading...</span></div>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" style="background: #10b981;" data-width="8%"></div></div>
-            </div>
+       
 
-            <div class="notice-board">
-                <div class="notice-tag">🔬 Scientists are still investigating.</div>
-                <div class="notice-tag">📊 Data unavailable.</div>
-                <div class="notice-tag">🍿 Please contribute snacks for further research.</div>
-                <div class="notice-tag">⚠️ Error 404: Sibling Treat Not Found.</div>
-            </div>
-        </div>
-    </section>
-
-    <section id="gallery" class="scroll-reveal">
-        <h2 class="section-title">Memory Gallery</h2>
-        <div class="gallery-grid">
-            <div class="polaroid" onclick="openLightbox('photo1.jpg')">
-                <div class="polaroid-img-frame"><img src="photo1.jpg" alt="Memory One" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3e8ff\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'10\' fill=\'%23a855f7\'>Photo 1 Placeholder</text></svg>'"></div>
-                <div class="polaroid-caption">Best Dynamic Duo ✨</div>
-            </div>
-            <div class="polaroid" onclick="openLightbox('photo2.jpg')">
-                <div class="polaroid-img-frame"><img src="photo2.jpg" alt="Memory Two" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'><rect width=\'100%\' height=\'100%\' fill=\'%23fce7f3\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'10\' fill=\'%23ec4899\'>Photo 2 Placeholder</text></svg>'"></div>
-                <div class="polaroid-caption">Stole my food here 🥞</div>
-            </div>
-            <div class="polaroid" onclick="openLightbox('photo3.jpg')">
-                <div class="polaroid-img-frame"><img src="photo3.jpg" alt="Memory Three" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'><rect width=\'100%\' height=\'100%\' fill=\'%23e0f2fe\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'10\' fill=\'%230284c7\'>Photo 3 Placeholder</text></svg>'"></div>
-                <div class="polaroid-caption">Exquisite Pose 👑</div>
-            </div>
-            <div class="polaroid" onclick="openLightbox('photo4.jpg')">
-                <div class="polaroid-img-frame"><img src="photo4.jpg" alt="Memory Four" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'><rect width=\'100%\' height=\'100%\' fill=\'%23ecfdf5\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'10\' fill=\'%23059669\'>Photo 4 Placeholder</text></svg>'"></div>
-                <div class="polaroid-caption">Total Troublemaker Mood 😂</div>
-            </div>
-            <div class="polaroid" onclick="openLightbox('photo5.jpg')" style="grid-column: span 2; max-width: 70%; margin: 0 auto; transform: rotate(-1deg);">
-                <div class="polaroid-img-frame"><img src="photo5.jpg" alt="Memory Five" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'><rect width=\'100%\' height=\'100%\' fill=\'%23fff7ed\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'10\' fill=\'%23ea580c\'>Photo 5 Placeholder</text></svg>'"></div>
-                <div class="polaroid-caption">Favorite Memory Framework 🎯</div>
-            </div>
-        </div>
-    </section>
-
-    <div id="lightbox" onclick="closeLightbox()">
-        <img id="lightbox-img" src="" alt="Enlarged View">
     </div>
+</section>
+  
+<section class="section glass">
+<h2 class="section-title">🧠 Friend Analysis Report</h2>
 
-    <section id="videos" class="scroll-reveal">
-        <h2 class="section-title">Video Memories</h2>
-        <div class="video-wrapper">
-            <div class="glass-card video-card">
-                <video src="video1.mp4" controls preload="metadata"></video>
-            </div>
-            <div class="glass-card video-card">
-                <video src="video2.mp4" controls preload="metadata"></video>
-            </div>
-        </div>
-    </section>
+<div class="stat">
+<div class="label">
+<span>✨ Beauty Level</span>
+<span>100%</span>
+</div>
+<div class="bar"><div class="fill" style="width:99.9%"></div></div>
+</div>
 
-    <section id="appreciation" class="scroll-reveal">
-        <h2 class="section-title">Appreciation Notes</h2>
-        <div class="sticky-container">
-            <div class="sticky-note">"You always support people."</div>
-            <div class="sticky-note">"You work hard."</div>
-            <div class="sticky-note">"You make life less boring."</div>
-            <div class="sticky-note">"You somehow manage everything."</div>
-            <div class="sticky-note">"You deserve more appreciation than you get."</div>
-            <div class="sticky-note">"You make family moments better."</div>
-            <div class="sticky-note">"You're stronger than you think."</div>
-            <div class="sticky-note">"You've helped more people than you realize."</div>
-        </div>
-    </section>
+<div class="stat">
+<div class="label">
+<span>😎 Confidence Level</span>
+<span>100%</span>
+</div>
+<div class="bar"><div class="fill" style="width:100%"></div></div>
+</div>
 
-    <section id="matter" class="scroll-reveal">
-        <h2 class="section-title">The Very Important Matter</h2>
-        <div class="glass-card matter-card">
-            <div id="sequence-text" class="text-seq">Now that we've established you're awesome...</div>
-            <div id="countdown" class="countdown-display">00:05</div>
-            
-            <div id="treat-center">
-                <h3>💸 Treat Fund Collection Center 💸</h3>
-                <p style="font-size: 0.95rem; margin-top: 10px; color: var(--text-muted);">Since we're far away, modern problems require modern solutions.</p>
-                <div class="qr-frame">
-                    <img src="qr.png" alt="Payment QR Code" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'150\' height=\'150\' viewBox=\'0 0 150 150\'><rect width=\'100%\' height=\'100%\' fill=\'%23eee\'/><path d=\'M10 10h30v30h-30zM110 10h30v30h-30zM10 110h30v30h-30z\' fill=\'%23333\'/><path d=\'M50 50h50v50h-50z\' fill=\'%2374b9ff\'/></svg>'">
-                </div>
-            </div>
-        </div>
-    </section>
+<div class="stat">
+<div class="label">
+<span>📸 Camera Friendliness</span>
+<span>100%</span>
+</div>
+<div class="bar"><div class="fill" style="width:100%"></div></div>
+</div>
 
-    <section id="game" class="scroll-reveal">
-        <div class="glass-card game-card" id="game-main-box">
-            <div id="game-question-area">
-                <h3 id="game-heading">Will you officially sponsor your favourite younger brother's treat?</h3>
-                <div class="game-actions" id="button-container">
-                    <button class="game-btn yes-btn" id="btn-yes" onclick="selectYesAnswer()">
-    🎁 Sponsor The Treat
-    <span id="treat-level">Level 1</span>
+<div class="stat">
+<div class="label">
+<span>🍕 Treat Distribution Rate</span>
+<span>0.01%</span>
+</div>
+<div class="bar"><div class="fill" style="width:4%"></div></div>
+</div>
+
+</section>
+
+<section class="section glass">
+<h2 class="section-title">📜 Official Research Findings</h2>
+
+<p class="story">
+One day I realized that despite all these amazing qualities, Jhumri somehow manages to avoid giving treats with professional-level skill.
+<br><br>
+Scientists are still studying this phenomenon.
+<br><br>
+The website exists solely because asking normally was apparently not working.
+</p>
+</section>
+
+<section class="question glass" id="mainQuestion">
+
+<h2>
+So... will you finally give a treat? 🥺👉👈
+</h2>
+
+<div class="buttons">
+
+<button class="yes" id="yesBtn">
+YES, FINE 😭🍕
 </button>
-                    <button class="game-btn no-btn" id="btn-no" onclick="handleNoInteraction(event)" onmouseover="handleNoInteraction(event)">🙄 No</button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="glass-card" id="success-card">
-            <h3 style="color: #059669; margin-bottom: 12px;">🏆 Correct Answer Selected!</h3>
-            <p style="font-size: 0.95rem; margin-bottom: 12px; font-weight: 600;">You are officially the most generous, most amazing, most talented, most beautiful and most legendary sister on this planet.</p>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; font-style: italic;">The Younger Brother Appreciation Department thanks you for your contribution.</p>
-            <p style="font-size: 0.9rem; font-weight: 700; border-top: 1px dashed rgba(0,0,0,0.1); padding-top: 12px;">Your reward: Unlimited respect, premium sibling status and occasional annoying phone calls.</p>
-        </div>
-    </section>
 
-    <section id="final" class="scroll-reveal">
-        <div class="glass-card final-card">
-            <p>Jokes aside...</p>
-            <p>You've always been one of my favourite people.</p>
-            <p>Thank you for everything.</p>
-            <p style="color: var(--accent-pink); font-weight: bold;">For the support.</p>
-            <p style="color: var(--accent-purple); font-weight: bold;">For the memories.</p>
-            <p style="color: var(--accent-blue); font-weight: bold;">For always being there.</p>
-            <p style="font-size: 0.95rem; margin-top: 20px;" class="text-muted">And yes, this website was definitely not made just for the treat.</p>
-            <p style="font-size: 0.9rem;">(Okay maybe a little.) 😂</p>
-            
-            <div class="certificate-badge" onclick="triggerCertificateCelebration()">
-                <h4>🏆 World's Best Sister</h4>
-                <p>(According To Me)</p>
-            </div>
-        </div>
-    </section>
+<button class="no" id="noBtn">
+NO 😌
+</button>
 
-    <script>
-        /* --- GLOBAL BACKGROUND DECORATIONS --- */
-        const ambientSymbols = ['💖', '✨', '🦋', '⭐', '🌸'];
-        const ambientContainer = document.getElementById('ambient-container');
+</div>
 
-        function createAmbientParticles() {
-            const particleCount = window.innerWidth < 600 ? 15 : 30;
-            for (let i = 0; i < particleCount; i++) {
-                const span = document.createElement('span');
-                span.className = 'floating-element';
-                span.innerText = ambientSymbols[Math.floor(Math.random() * ambientSymbols.length)];
-                span.style.left = Math.random() * 100 + 'vw';
-                span.style.top = Math.random() * 100 + 'vh';
-                // Varied delays to prevent layout clumps
-                span.style.animationDelay = (Math.random() * -12) + 's'; 
-                span.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
-                ambientContainer.appendChild(span);
-            }
-        }
-        createAmbientParticles();
+<div class="roast" id="roast">
+Choose wisely, Jhumri 👀
+</div>
 
-        /* --- AUDIO MANAGEMENT --- */
-        const bgMusic = document.getElementById('bg-music');
-        const musicBtn = document.getElementById('music-btn');
+<div class="meter">
+<div class="meter-title">
+Probability of Jhumri Giving A Treat
+</div>
 
-        function toggleMusic() {
-            if (bgMusic.paused) {
-                bgMusic.play().then(() => {
-                    musicBtn.innerText = '⏸️';
-                }).catch(err => console.log("Audio play prevented: ", err));
-            } else {
-                bgMusic.pause();
-                musicBtn.innerText = '🎵';
-            }
-        }
+<div class="meter-bar">
+<div class="meter-fill" id="meterFill"></div>
+</div>
 
-        /* --- INTERSECTION OBSERVER FOR SCROLL ANIMATIONS --- */
-        const revealElements = document.querySelectorAll('.scroll-reveal');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    // Special case: animate facts bar metrics when visible
-                    if (entry.target.id === 'facts') {
-                        animateProgressBars();
-                    }
-                }
-            });
-        }, { threshold: 0.15 });
+<div class="percent" id="percent">
+0%
+</div>
+</div>
 
-        revealElements.forEach(el => observer.observe(el));
+</section>
 
-        function animateProgressBars() {
-            const fills = document.querySelectorAll('.progress-bar-fill');
-            fills.forEach(fill => {
-                fill.style.width = fill.getAttribute('data-width');
-            });
-        }
+<section class="success glass" id="success">
 
-        function scrollToNext(id) {
-            const element = document.getElementById(id);
-            if(element) element.scrollIntoView({ behavior: 'smooth' });
-        }
+<h1>🎉 TREAT APPROVED 🎉</h1>
 
-        /* --- LIGHTBOX MANAGEMENT --- */
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
+<p>
+Aww, I knew tum party dogi 😌✨
+</p>
 
-        function openLightbox(src) {
-            lightboxImg.src = src;
-            lightbox.classList.add('active');
-        }
-        function closeLightbox() {
-            lightbox.classList.remove('active');
-        }
+<p>
+Thank you for finally ending this struggle.
+</p>
 
-        /* --- SECTION 7 TEXT SEQUENCE & COUNTDOWN LOGIC --- */
-        const phrases = [
-            "Now that we've established you're awesome...",
-            "We need to discuss a critical issue.",
-            "I still haven't received my official sibling treat."
-        ];
-        let phraseIdx = 0;
-        const seqTextElem = document.getElementById('sequence-text');
-        const countdownElem = document.getElementById('countdown');
-        const treatCenterElem = document.getElementById('treat-center');
+<div class="achievement">
+<h2>🏆 Achievement Unlocked</h2>
+<p><b>Best Friend (Treat Provider Edition)</b></p>
+</div>
 
-        // Cycle text logic
-        setInterval(() => {
-            if (phraseIdx < phrases.length - 1) {
-                phraseIdx++;
-                seqTextElem.style.opacity = 0;
-                setTimeout(() => {
-                    seqTextElem.innerText = phrases[phraseIdx];
-                    seqTextElem.style.opacity = 1;
-                }, 400);
-            }
-        }, 3500);
+<p style="margin-top:25px;">
+Now the only remaining challenge is to pay the bill.
+  aur wo tu kregi 
+</p>
 
-        // Countdown timer implementation
-        let count = 5;
-        const countdownTimer = setInterval(() => {
-            count--;
-            countdownElem.innerText = `00:0${count}`;
-            if (count <= 0) {
-                clearInterval(countdownTimer);
-                countdownElem.style.display = 'none';
-                treatCenterElem.style.display = 'block';
-                setTimeout(() => treatCenterElem.style.opacity = 1, 50);
-            }
-        }, 1000);
+</section>
 
-        /* --- SECTION 8: MINI DECISION GAME SYSTEM --- */
-        let noClicks = 0;
-        const noBtn = document.getElementById('btn-no');
-        const yesBtn = document.getElementById('btn-yes');
-        const boxContainer = document.getElementById('button-container');
+</div>
 
-        const noPhrases = {
-            2: "🤨 Are You Sure?",
-            4: "😑 Think Again",
-            6: "😂 Nice Try",
-            8: "🏃 Catch Me First"
-        };
-const treatLevels = [
-    "Level 1",
-    "Level 2",
-    "VIP Sponsor",
-    "Legend Sponsor",
-    "Best Didi Ever",
-    "Treat Queen 👑"
+<script>
+
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const roast = document.getElementById("roast");
+const meterFill = document.getElementById("meterFill");
+const percent = document.getElementById("percent");
+
+const roasts = [
+"Nice try 😂",
+"You thought that would work?",
+"The button is on my side.",
+"Treat dene se itna darr?",
+"Running away won't save your wallet.",
+"Still avoiding the question?",
+"Jhumri.exe has encountered an excuse.",
+"Bro just click yes 😭",
+"At this point even the button wants a treat.",
+"That's suspiciously not a yes."
 ];
-       function handleNoInteraction(e) {
 
-    e.preventDefault();
-    noClicks++;
+let probability = 0;
+let scale = 1;
 
-    // YES button grows
-    const currentYesScale = 1 + (noClicks * 0.15);
-    yesBtn.style.transform = `scale(${currentYesScale})`;
+function moveNoButton(){
 
-    // funny text changes
-    if(noClicks === 1) noBtn.innerText = "🤨 Sure?";
-    if(noClicks === 2) noBtn.innerText = "😏 Really?";
-    if(noClicks === 3) noBtn.innerText = "😂 Nice Try";
-    if(noClicks === 4) noBtn.innerText = "🏃 Catch Me";
-    if(noClicks >= 5) noBtn.innerText = "😭 Please No";
+const randomX = Math.random() * (window.innerWidth - 180);
+const randomY = Math.random() * 120;
 
-    const gameCard = document.getElementById("game-main-box");
+noBtn.style.position = "absolute";
+noBtn.style.left = randomX + "px";
+noBtn.style.top = randomY + "px";
 
-    const cardWidth = gameCard.clientWidth;
-    const cardHeight = gameCard.clientHeight;
+probability += 10;
+if(probability > 100) probability = 100;
 
-    const btnWidth = noBtn.offsetWidth;
-    const btnHeight = noBtn.offsetHeight;
+meterFill.style.width = probability + "%";
+percent.innerText = probability + "%";
 
-    const randomX = Math.random() * (cardWidth - btnWidth - 20);
-    const randomY = Math.random() * (cardHeight - btnHeight - 20);
+roast.innerText = roasts[Math.floor(Math.random()*roasts.length)];
 
-    noBtn.style.position = "absolute";
-    noBtn.style.left = randomX + "px";
-    noBtn.style.top = randomY + "px";
-
-}       function selectYesAnswer(){
-
-    triggerConfettiExplosion();
-
-    document.getElementById('game-question-area').innerHTML = `
-        <div style="padding:20px">
-            <h2 style="font-size:2rem">🎉 TREAT APPROVED 🎉</h2>
-
-            <p style="margin:15px 0">
-                Congratulations Didi!
-            </p>
-
-            <div style="
-                background:rgba(16,185,129,.1);
-                padding:15px;
-                border-radius:15px;
-                margin-top:15px;
-                line-height:1.8;
-            ">
-                ✅ Best Sister Award<br>
-                ✅ Premium Respect Pass<br>
-                ✅ Unlimited Younger Brother Happiness<br>
-                ✅ VIP Family Status<br>
-                ✅ One Pending Treat Bill 😎
-            </div>
-
-            <h3 style="margin-top:20px">
-                Wise Decision 👑
-            </h3>
-        </div>
-    `;
+scale += 0.08;
+yesBtn.style.transform = `scale(${scale})`;
 }
-        function triggerCertificateCelebration() {
-            triggerConfettiExplosion();
-            const cert = document.querySelector('.certificate-badge');
-            cert.style.transform = 'scale(1.1)';
-            setTimeout(() => cert.style.transform = 'none', 300);
-        }
 
-        /* --- PROGRAMMATIC ENGINE: CANVAS CONFETTI & SPARKLES --- */
-        const canvas = document.getElementById('confetti-canvas');
-        const ctx = canvas.getContext('2d');
-        let pieces = [];
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("click", moveNoButton);
+const bgMusic = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+let isPlaying = false;
+let fadeInterval;
 
-        class ConfettiPiece {
-            constructor(x, y, isSparkle = false) {
-                this.x = x;
-                this.y = y;
-                this.isSparkle = isSparkle;
-                this.size = isSparkle ? (Math.random() * 4 + 2) : (Math.random() * 8 + 6);
-                this.color = isSparkle ? '#fff' : ['#ff758f', '#9c88ff', '#74b9ff', '#fcc419', '#ff8787'][Math.floor(Math.random() * 5)];
-                this.speedX = (Math.random() - 0.5) * 8;
-                this.speedY = isSparkle ? (Math.random() - 0.5) * 6 : (Math.random() * -10 - 4);
-                this.gravity = isSparkle ? 0.02 : 0.25;
-                this.opacity = 1;
-                this.rotation = Math.random() * 360;
-                this.rotationSpeed = (Math.random() - 0.5) * 10;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                this.speedY += this.gravity;
-                this.rotation += this.rotationSpeed;
-                this.opacity -= 0.015;
-            }
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.globalAlpha = this.opacity;
-                ctx.fillStyle = this.color;
-                if (this.isSparkle) {
-                    // Star/Sparkle drawing logic
-                    ctx.beginPath();
-                    for(let i=0; i<5; i++) {
-                        ctx.lineTo(0, 0 - this.size);
-                        ctx.rotate(Math.PI / 2.5);
-                        ctx.lineTo(0, 0 - (this.size/2));
-                        ctx.rotate(Math.PI / 2.5);
-                    }
-                    ctx.fill();
-                } else {
-                    ctx.rotate(this.rotation * Math.PI / 180);
-                    ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
-                }
-                ctx.restore();
-            }
-        }
+function fadeInMusic(){
+  bgMusic.volume = 0;
+  const playPromise = bgMusic.play();
+if(playPromise !== undefined){
+  playPromise.catch(()=>{});
+}
 
-        function triggerConfettiExplosion() {
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight * 0.6;
-            
-            // Standard Confetti
-            for (let i = 0; i < 100; i++) {
-                pieces.push(new ConfettiPiece(centerX, centerY, false));
-            }
-            // Sparkles
-            for (let i = 0; i < 60; i++) {
-                pieces.push(new ConfettiPiece(centerX, centerY, true));
-            }
-        }
+  let vol = 0;
+  clearInterval(fadeInterval);
 
-        function animateCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            pieces.forEach((piece, index) => {
-                piece.update();
-                piece.draw();
-                if (piece.opacity <= 0) pieces.splice(index, 1);
-            });
-            requestAnimationFrame(animateCanvas);
-        }
-        animateCanvas();
-    </script>
+  fadeInterval = setInterval(() => {
+    if(vol < 1){
+      vol += 0.05;
+      bgMusic.volume = vol;
+    } else {
+      clearInterval(fadeInterval);
+    }
+  }, 100);
+
+  isPlaying = true;
+  musicBtn.innerText = "🔊";
+}
+
+function toggleMusic(){
+  if(isPlaying){
+    bgMusic.pause();
+    isPlaying = false;
+    musicBtn.innerText = "🔇";
+  } else {
+    fadeInMusic();
+  }
+}
+
+musicBtn.addEventListener("click", toggleMusic);
+yesBtn.addEventListener("click", async ()=>{
+
+  document.getElementById("success").style.display="block";
+
+  document.body.style.background=
+  "linear-gradient(135deg,#ffd6ec,#fff4d6,#f3e8ff,#d6fff3)";
+
+  launchConfetti();
+
+  window.scrollTo({
+    top:document.body.scrollHeight,
+    behavior:'smooth'
+  });
+
+  try {
+    bgMusic.volume = 0;
+    await bgMusic.play();
+
+    let vol = 0;
+    clearInterval(fadeInterval);
+
+    fadeInterval = setInterval(() => {
+      if(vol < 1){
+        vol += 0.05;
+        bgMusic.volume = vol;
+      } else {
+        clearInterval(fadeInterval);
+      }
+    }, 100);
+
+    isPlaying = true;
+    musicBtn.innerText = "🔊";
+
+  } catch (err) {
+    console.log("Audio blocked:", err);
+  }
+
+});
+function launchConfetti(){
+
+for(let i=0;i<250;i++){
+
+let confetti=document.createElement("div");
+confetti.classList.add("confetti");
+
+confetti.style.left=Math.random()*100+"vw";
+confetti.style.background=
+`hsl(${Math.random()*360},100%,60%)`;
+
+confetti.style.width=(Math.random()*10+6)+"px";
+confetti.style.height=(Math.random()*10+6)+"px";
+
+confetti.style.animationDuration=
+(Math.random()*3+2)+"s";
+
+document.body.appendChild(confetti);
+
+setTimeout(()=>{
+confetti.remove();
+},6000);
+}
+
+for(let i=0;i<80;i++){
+
+let heart=document.createElement("div");
+
+heart.innerHTML=["💖","💗","💞","✨","🎉"][Math.floor(Math.random()*5)];
+
+heart.style.position="fixed";
+heart.style.left=Math.random()*100+"vw";
+heart.style.top="100vh";
+heart.style.fontSize=(Math.random()*25+20)+"px";
+heart.style.pointerEvents="none";
+heart.style.zIndex="9999";
+
+document.body.appendChild(heart);
+
+heart.animate([
+{transform:'translateY(0)',opacity:1},
+{transform:'translateY(-120vh)',opacity:0}
+],{
+duration:3000+Math.random()*3000,
+easing:'ease-out'
+});
+
+setTimeout(()=>heart.remove(),6000);
+}
+
+}
+
+</script>
+
 </body>
 </html>
